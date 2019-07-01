@@ -19,20 +19,22 @@ class TodoForm extends Component {
     event.preventDefault()
     this.props.addTodo(this.state)
     this.setState({
-      title: '',
-      content: ''
-    })
+        title: '',
+        content: ''
+      })
   }
+
+  
 
   render() {
     return(
       <div>
         <h2>TodoForm</h2>
         <form onSubmit={this.handleSubmit}>
-          <label for='title'>Title</label>
-          <input name='title' value={this.state.title} onChange={this.handleChange} />
-          <label for='content'>Content</label>
-          <input name='content' value={this.state.content} onChange={this.handleChange} />
+          <label htmlFor='title'>Title</label>
+          <input name='title' id='title' value={this.state.title} onChange={this.handleChange} />
+          <label htmlFor='content'>Content</label>
+          <input name='content' id='content' value={this.state.content} onChange={this.handleChange} />
           <button>Submit</button>
         </form>
       </div>

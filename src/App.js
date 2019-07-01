@@ -6,27 +6,52 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      todos: [
-        {id: 1, title: 'Brush teeth', content: 'Please brush your teeth before leaving the house'},
-        {id: 2, title: 'Comb hair', content: 'Please comb your hair before leaving the house'}
-      ]
+      todos: undefined
     }
   }
 
+
+componentDidMount(){
+  setTimeout(() => {
+    this.fetchTodos()
+  }, 1200);
+}
+
+  fetchTodos = () => {
+    let url = "http://localhost:3000/todos"
+    fetch(url)
+        .then(response => response.json())
+        .then(response => this.setState({
+            todos: response
+        }))
+  }
+
   addTodo = (todoObj) => {
-    const newItem = {...todoObj, id: Date.now()}
+    let url = "http://localhost:3000/todos"
+    const newItem = {...todoObj}
     const newTodos = [...this.state.todos, newItem]
-    this.setState({
-      todos: newTodos
+  
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(todoObj), 
+      headers:{
+        'Content-Type': 'application/json'
+      }
     })
+    .then(res => res.json())
+    .then(response => console.log('Success:', JSON.stringify(response)))
+    .catch(error => console.error('Error:', error))
+    .then( this.setState({
+      todos: newTodos
+    }))
   }
 
   render() {
     return(
       <div>
         <h1>Git Money Todo App</h1>
-        <TodoForm addTodo={this.addTodo} />
-        <TodoContainer todos={this.state.todos} />
+        <TodoForm addTodo={this.addTodo}/>
+        {this.state.todos ? <TodoContainer todos={this.state.todos} /> : <img src="https://media2.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" /> }
       </div>
     )
   }
