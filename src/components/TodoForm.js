@@ -19,15 +19,13 @@ class TodoForm extends Component {
     event.preventDefault()
     this.props.addTodo(this.state)
     this.setState({
-        title: '',
-        content: ''
-      })
+      title: '',
+      content: ''
+    })
   }
 
-  
-
   render() {
-    return(
+    return (
       <div>
         <h2>TodoForm</h2>
         <form onSubmit={this.handleSubmit}>
